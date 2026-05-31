@@ -65,7 +65,7 @@ public class EstadoMusical {
         instrumentoAtual = instrumento;
     }
 
-    public static void reiniciarBPM(){
+    public static void reiniciarBpm(){
         bpmGlobal = BPM_INICIAL;
     }
 
