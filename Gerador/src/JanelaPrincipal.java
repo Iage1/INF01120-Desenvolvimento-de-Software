@@ -39,7 +39,18 @@ public class JanelaPrincipal extends JFrame {
 
         btnAbrir.addActionListener(e -> AbrirArquivo.abrir(areaTexto, this));
         btnGerar.addActionListener(e -> gerarMusica());
-        //btnPlayPause.addActionListener(e-> );
+        btnPlayPause.addActionListener(e -> {
+            if (saida.estaTocando()) {
+                saida.pausar();
+                btnPlayPause.setText("Retomar");
+            } else if (saida.estaPausado()) {
+                saida.retomar();
+                btnPlayPause.setText("Pausar");
+            } else {
+                gerarMusica();
+                btnPlayPause.setText("Pausar");
+            }
+        });
 
         setVisible(true);
     }
