@@ -1,3 +1,5 @@
+package regras.acoes;
+
 public class AcaoAlterarBPM implements AcaoMusical {
 
     private int valor; //valor da alteração tem que ser passado como parametro na instanciação

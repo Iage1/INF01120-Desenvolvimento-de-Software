@@ -1,3 +1,5 @@
+package regras.acoes;
+
 public class AcaoRepetirOuPausar implements AcaoMusical {
     @Override
     public EventoMusical executar(EstadoMusical estado) {
