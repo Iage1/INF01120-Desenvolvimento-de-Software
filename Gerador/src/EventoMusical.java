@@ -30,6 +30,7 @@ public class EventoMusical {
     public boolean ehPausa(){
         return pausa;
     }
+
     public String obterNota(){
         return nota;
     }

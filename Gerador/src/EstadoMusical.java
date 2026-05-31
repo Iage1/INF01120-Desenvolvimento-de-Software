@@ -12,7 +12,7 @@ public class EstadoMusical {
     private static int bpmGlobal = BPM_INICIAL;
 
     //atributos locais
-    private int oitavaInicial;
+    private final int oitavaInicial;
     private int oitavaAtual;
     private int volumeAtual;
     private int instrumentoAtual;
@@ -61,11 +61,23 @@ public class EstadoMusical {
         instrumentoAtual = instrumentoAtual % TOTAL_INSTRUMENTOS; //torna a operação cíclica.
     }
 
-    public void guardarUltimaNota(String nota) {
-        this.ultimaNota = nota;
+    public void definirInstrumentoAtual(int instrumento){
+        instrumentoAtual = instrumento;
     }
 
-    //getters e setters
+    public static void reiniciarBPM(){
+        bpmGlobal = BPM_INICIAL;
+    }
+
+    public void registrarUltimaNota(String nota){
+        ultimaNota = nota;
+    }
+
+    public void limparUltimaNota(){
+        ultimaNota = null;
+    }
+
+    //getters
     public int obterOitavaAtual(){
         return oitavaAtual;
     }
@@ -76,10 +88,6 @@ public class EstadoMusical {
 
     public int obterInstrumentoAtual(){
         return instrumentoAtual;
-    }
-
-    public void definirInstrumentoAtual(int instrumento){
-        instrumentoAtual = instrumento;
     }
 
     public static int obterBpmGlobal(){
