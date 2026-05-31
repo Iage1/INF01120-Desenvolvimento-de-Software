@@ -1,4 +1,5 @@
 import org.jfugue.player.Player;
+import regras.acoes.AcaoMusical;
 
 public class GerarMusica {
 

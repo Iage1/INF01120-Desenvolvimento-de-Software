@@ -1,3 +1,5 @@
+package regras.acoes;
+
 public class AcaoTrocarInstrumento implements AcaoMusical {
 
     private final int instrumento;

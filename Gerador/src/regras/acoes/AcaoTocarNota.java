@@ -1,3 +1,5 @@
+package regras.acoes;
+
 public class AcaoTocarNota implements AcaoMusical{
 
     private final String nota;
