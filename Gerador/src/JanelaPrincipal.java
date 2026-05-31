@@ -20,6 +20,9 @@ public class JanelaPrincipal extends JFrame {
         setLocationRelativeTo(null);
 
         areaTexto = new JTextArea();
+        areaTexto.setFont(new Font("Arial", Font.PLAIN, 20));
+        areaTexto.setLineWrap(true);
+        areaTexto.setWrapStyleWord(true);
         areaTexto.setLineWrap(true);
         areaTexto.setWrapStyleWord(true);
 
