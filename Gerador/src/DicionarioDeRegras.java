@@ -10,7 +10,7 @@ public class DicionarioDeRegras {
 
     private final Map<Character, AcaoMusical> regrasFixas = new HashMap<>();
 
-    public DicionariodeRegras() {
+    public DicionarioDeRegras() {
         //letras maiúsculas
         regrasFixas.put('A', new AcaoTocarNota("A"));
         regrasFixas.put('B', new AcaoTocarNota("B"));
