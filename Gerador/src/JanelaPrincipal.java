@@ -42,13 +42,10 @@ public class JanelaPrincipal extends JFrame {
         btnPlayPause.addActionListener(e -> {
             if (saida.estaTocando()) {
                 saida.pausar();
-                btnPlayPause.setText("Retomar");
             } else if (saida.estaPausado()) {
                 saida.retomar();
-                btnPlayPause.setText("Pausar");
             } else {
                 gerarMusica();
-                btnPlayPause.setText("Pausar");
             }
         });
 
