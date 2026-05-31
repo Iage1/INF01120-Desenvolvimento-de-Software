@@ -12,17 +12,17 @@ public class EstadoMusical {
     private static int bpmGlobal = BPM_INICIAL;
 
     //atributos locais
-    private int oitavaAtual;
     private int oitavaInicial;
+    private int oitavaAtual;
     private int volumeAtual;
     private int instrumentoAtual;
 
     //instanciação e parâmetros iniciais
     public EstadoMusical(int oitavaInicial, int volumeInicial, int instrumentoInicial) {
-        this.oitavaInicial = oitavaInicial; //precisa guardar o valor da oitava inicial (olhar aumentarOitava)
-        this.oitavaAtual = oitavaInicial;
-        this.volumeAtual = volumeInicial;
-        this.instrumentoAtual = instrumentoInicial;
+        this.oitavaInicial = oitavaInicial;
+        oitavaAtual = oitavaInicial;
+        volumeAtual = volumeInicial;
+        instrumentoAtual = instrumentoInicial;
     }
 
     //métodos
@@ -30,8 +30,11 @@ public class EstadoMusical {
         if (oitavaAtual < OITAVA_MAXIMA){
             oitavaAtual++;
         }
-        else {
-            oitavaAtual = oitavaInicial;
+    }
+
+    public void diminuirOitava(){
+        if (oitavaAtual > OITAVA_MINIMA){
+            oitavaAtual--;
         }
     }
 
