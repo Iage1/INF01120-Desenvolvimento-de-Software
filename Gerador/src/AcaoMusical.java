@@ -1,4 +1,4 @@
 public interface AcaoMusical {
     //interface pra todas
-    void executar(EstadoMusical estado);
+    public EventoMusical executar(EstadoMusical estado);
 }

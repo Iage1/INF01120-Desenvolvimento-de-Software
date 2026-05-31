@@ -1,6 +1,7 @@
-public class AcaoDiminuirOitava implements AcaoMusical{
+public class AcaoDiminuirOitava implements AcaoMusical {
     @Override
-    public void executar(EstadoMusical estado) {
+    public EventoMusical executar(EstadoMusical estado) {
         estado.diminuirOitava();
+        return null;
     }
 }

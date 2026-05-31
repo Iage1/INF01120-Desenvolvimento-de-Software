@@ -16,8 +16,9 @@ public class EstadoMusical {
     private int oitavaAtual;
     private int volumeAtual;
     private int instrumentoAtual;
+    private String ultimaNota = null;
 
-    //instanciação e parâmetros iniciais
+    //construtor
     public EstadoMusical(int oitavaInicial, int volumeInicial, int instrumentoInicial) {
         this.oitavaInicial = oitavaInicial;
         oitavaAtual = oitavaInicial;
@@ -29,6 +30,9 @@ public class EstadoMusical {
     public void aumentarOitava(){
         if (oitavaAtual < OITAVA_MAXIMA){
             oitavaAtual++;
+        }
+        else {
+            oitavaAtual = oitavaInicial;
         }
     }
 
@@ -57,6 +61,10 @@ public class EstadoMusical {
         instrumentoAtual = instrumentoAtual % TOTAL_INSTRUMENTOS; //torna a operação cíclica.
     }
 
+    public void guardarUltimaNota(String nota) {
+        this.ultimaNota = nota;
+    }
+
     //getters e setters
     public int obterOitavaAtual(){
         return oitavaAtual;
@@ -76,5 +84,9 @@ public class EstadoMusical {
 
     public static int obterBpmGlobal(){
         return bpmGlobal;
+    }
+
+    public String obterUltimaNota() {
+        return ultimaNota;
     }
 }

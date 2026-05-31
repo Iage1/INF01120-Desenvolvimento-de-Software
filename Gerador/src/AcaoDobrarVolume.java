@@ -1,6 +1,7 @@
-public class AcaoDobrarVolume implements AcaoMusical{
+public class AcaoDobrarVolume implements AcaoMusical {
     @Override
-    public void executar(EstadoMusical estado){
+    public EventoMusical executar(EstadoMusical estado){
         estado.dobrarVolume();
+        return null;
     }
 }
