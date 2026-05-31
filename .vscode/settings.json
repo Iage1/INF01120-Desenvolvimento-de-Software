@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": [
+        "Gerador\\src"
+    ],
+    "java.project.referencedLibraries": [
+        "Gerador\\lib\\jfugue-5.0.9.jar"
+    ]
+}
