@@ -46,7 +46,9 @@ public class CompositorDeVozes {
             int fim = s.indexOf(']');
             if (fim > 1) {
                 try { return Integer.parseInt(s.substring(1, fim).trim()); }
-                catch (NumberFormatException ex) { return 0; }
+                catch (NumberFormatException ex) {
+                    return 0;
+                }
             }
         }
         return 0;

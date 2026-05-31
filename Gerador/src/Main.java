@@ -1,9 +1,9 @@
 import org.jfugue.player.Player;
 
-class Main {
-    static void main() {
-        Player player = new Player();
-        player.play("C5");
-        System.out.println("feito!");
+import javax.swing.SwingUtilities;
+
+public class Main {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new JanelaPrincipal());
     }
 }
