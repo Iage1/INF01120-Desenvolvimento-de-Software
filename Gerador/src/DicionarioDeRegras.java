@@ -11,7 +11,7 @@ public class DicionarioDeRegras {
     private final Map<Character, AcaoMusical> regrasFixas = new HashMap<>();
 
     public DicionarioDeRegras() {
-        //letras maiúsculas
+        //notas
         regrasFixas.put('A', new AcaoTocarNota("A"));
         regrasFixas.put('B', new AcaoTocarNota("B"));
         regrasFixas.put('C', new AcaoTocarNota("C"));
@@ -20,6 +20,7 @@ public class DicionarioDeRegras {
         regrasFixas.put('F', new AcaoTocarNota("F"));
         regrasFixas.put('G', new AcaoTocarNota("G"));
         regrasFixas.put('H', new AcaoTocarNota("Bb"));
+        regrasFixas.put('~', new AcaoTocarNota("Eb"));
 
         //pausa
         for (char c = 'a'; c <= 'h'; c++) { //letras minúsculas

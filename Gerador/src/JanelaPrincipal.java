@@ -16,11 +16,11 @@ public class JanelaPrincipal extends JFrame {
     public JanelaPrincipal() {
         super("Gerador de Música");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1000, 900);
         setLocationRelativeTo(null);
 
         areaTexto = new JTextArea();
-        areaTexto.setFont(new Font("Arial", Font.PLAIN, 20));
+        areaTexto.setFont(new Font("Times New Roman", Font.PLAIN, 40));
         areaTexto.setLineWrap(true);
         areaTexto.setWrapStyleWord(true);
         areaTexto.setLineWrap(true);
