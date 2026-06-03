@@ -13,7 +13,7 @@ public class Interpretador {
     public List<EventoMusical> interpretar(String linha, EstadoMusical estado) {
         List<EventoMusical> eventos = new ArrayList<>();
         for (char caractere : linha.toCharArray()) {                 //pra cada caractere, pergunta qual a ação,
-            AcaoMusical acao = dicionario.obterAcao(caractere);     // executa a ação, e e verifica se cria um evento
+            AcaoMusical acao = dicionario.obterAcao(caractere);     // executa a ação, e verifica se cria um evento
             EventoMusical resultado = acao.executar(estado);
             if (resultado != null) {
                 eventos.add(resultado);

@@ -6,7 +6,7 @@ import javax.sound.midi.Sequence;
 import org.jfugue.pattern.Pattern;
 import org.jfugue.midi.MidiFileManager;
 
-// Camada de saída: a ÚNICA classe que conhece o JFugue.
+//camada de saída
 public class SaidaMusicalJFugue {
 
     private Sequencer sequencer;
