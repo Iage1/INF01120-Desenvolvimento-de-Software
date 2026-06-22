@@ -11,7 +11,13 @@ public class DicionarioDeRegras {
     private final Map<Character, AcaoMusical> regrasFixas = new HashMap<>();
 
     public DicionarioDeRegras() {
-        //notas
+        registrarNotas();
+        registrarPausas();
+        registrarControles();
+        registrarInstrumentos();
+    }
+
+    private void registrarNotas() {
         regrasFixas.put('A', new AcaoTocarNota("A"));
         regrasFixas.put('B', new AcaoTocarNota("B"));
         regrasFixas.put('C', new AcaoTocarNota("C"));
@@ -21,40 +27,39 @@ public class DicionarioDeRegras {
         regrasFixas.put('G', new AcaoTocarNota("G"));
         regrasFixas.put('H', new AcaoTocarNota("Bb"));
         regrasFixas.put('~', new AcaoTocarNota("Eb"));
+    }
 
-        //pausa
-        for (char c = 'a'; c <= 'h'; c++) { //letras minúsculas
+    private void registrarPausas() {
+        for (char c = 'a'; c <= 'h'; c++) {
             regrasFixas.put(c, new AcaoPausar());
         }
-        //volume
-        regrasFixas.put(' ', new AcaoDobrarVolume());
+    }
 
-        //oitavas
+    private void registrarControles() {
+        regrasFixas.put(' ', new AcaoDobrarVolume());
         regrasFixas.put('?', new AcaoAumentarOitava());
         regrasFixas.put('V', new AcaoDiminuirOitava());
-
-        //bpm
         regrasFixas.put('>', new AcaoAlterarBPM(BPM_PASSO));
         regrasFixas.put('<', new AcaoAlterarBPM(-BPM_PASSO));
+    }
 
-        //instrumento
+    private void registrarInstrumentos() {
         regrasFixas.put('!', new AcaoTrocarInstrumento(HARMONICA));
         regrasFixas.put(';', new AcaoTrocarInstrumento(TUBULAR_BELLS));
         regrasFixas.put(',', new AcaoTrocarInstrumento(CHURCH_ORGAN));
-
     }
-    public AcaoMusical obterAcao(char caractere) {  //checa se se está no map, se sim devolve a ação de lá
-        if (regrasFixas.containsKey(caractere)) {   //se não, vai pra Ação de repetir ou pausar
+
+    public AcaoMusical obterAcao(char caractere) {
+        if (regrasFixas.containsKey(caractere)) {
             return regrasFixas.get(caractere);
         }
-        if (Character.isDigit(caractere)){    //se instrumento for par, soma ao instrumento, se for ímpar, troca pro Tubular Bells
-            int valor = caractere - '0';    //converte char em int
-            if (valor % 2 == 0){
+        if (Character.isDigit(caractere)) {
+            int valor = caractere - '0';
+            if (valor % 2 == 0) {
                 return new AcaoSomarInstrumento(valor);
             }
             return new AcaoTrocarInstrumento(TUBULAR_BELLS);
         }
         return new AcaoRepetirOuPausar();
     }
-
 }
