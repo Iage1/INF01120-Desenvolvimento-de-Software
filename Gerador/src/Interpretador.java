@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
+import java.nio.file.Paths;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,7 +38,7 @@ public class Interpretador {
     }
 
     private void pimenta() {
-        File arquivoImagem = new File("pimenta.png");
+        File arquivoImagem = Paths.get(System.getProperty("user.dir"), "Gerador", "lib", "pimenta.png").toFile();
         ImageIcon icone = new ImageIcon(arquivoImagem.getPath());
         if (icone.getIconWidth() <= 0) {
             JOptionPane.showMessageDialog(null,
