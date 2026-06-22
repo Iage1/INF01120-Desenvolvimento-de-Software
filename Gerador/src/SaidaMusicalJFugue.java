@@ -9,8 +9,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Component;
 
-//camada de saída
-public class SaidaMusicalJFugue {
+// Camada de saída: a ÚNICA classe que conhece o JFugue.
+public class SaidaMusicalJFugue implements SaidaMusical {
 
     private Sequencer sequencer;
     private File tempMidi;
@@ -18,6 +18,7 @@ public class SaidaMusicalJFugue {
     private volatile boolean playing = false;
     private long pausePosition = 0;
 
+    @Override
     public synchronized void tocar(String staccato) {
         stopAndClose();
         try {
@@ -31,7 +32,7 @@ public class SaidaMusicalJFugue {
             sequencer.open();
             sequencer.setSequence(seq);
             sequencer.addMetaEventListener(meta -> {
-                if (meta.getType() == 47) { // end of track
+                if (meta.getType() == 47) {
                     stopAndClose();
                 }
             });
@@ -43,6 +44,7 @@ public class SaidaMusicalJFugue {
         }
     }
 
+    @Override
     public synchronized void pausar() {
         try {
             if (sequencer != null && sequencer.isOpen() && sequencer.isRunning()) {
@@ -56,6 +58,7 @@ public class SaidaMusicalJFugue {
         }
     }
 
+    @Override
     public synchronized void retomar() {
         try {
             if (sequencer != null && sequencer.isOpen() && paused) {
@@ -69,10 +72,12 @@ public class SaidaMusicalJFugue {
         }
     }
 
+    @Override
     public synchronized boolean estaTocando() {
         return sequencer != null && sequencer.isOpen() && sequencer.isRunning();
     }
 
+    @Override
     public synchronized boolean estaPausado() {
         return paused;
     }
@@ -100,6 +105,7 @@ public class SaidaMusicalJFugue {
         }
     }
 
+    @Override
     public void salvarMidi(String staccato, File arquivo) throws IOException {
         MidiFileManager.savePatternToMidi(new Pattern(staccato), arquivo);
     }
@@ -146,3 +152,6 @@ public class SaidaMusicalJFugue {
         }
     }
 }
+
+
+
