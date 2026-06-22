@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+// ...existing code...
 
 public class JanelaPrincipal extends JFrame {
 
@@ -7,6 +8,10 @@ public class JanelaPrincipal extends JFrame {
     private final JButton btnAbrir;
     private final JButton btnGerar;
     private final JButton btnPlayPause;
+    private final JButton btnSalvar;
+
+    // armazena a última representação Staccato gerada (para salvar em MIDI)
+    private String ultimoStaccato = null;
 
     private final CompositorDeVozes compositor =
             new CompositorDeVozes(new Interpretador(new DicionarioDeRegras()));
@@ -29,6 +34,7 @@ public class JanelaPrincipal extends JFrame {
         btnAbrir = new JButton("Abrir TXT");
         btnGerar = new JButton("Gerar Música");
         btnPlayPause = new JButton("Play/Pause");
+        btnSalvar = new JButton("Salvar MIDI");
 
 
 
@@ -36,6 +42,7 @@ public class JanelaPrincipal extends JFrame {
         painelBotoes.add(btnAbrir);
         painelBotoes.add(btnGerar);
         painelBotoes.add(btnPlayPause);
+        painelBotoes.add(btnSalvar);
 
         add(new JScrollPane(areaTexto), BorderLayout.CENTER);
         add(painelBotoes, BorderLayout.SOUTH);
@@ -52,6 +59,24 @@ public class JanelaPrincipal extends JFrame {
             }
         });
 
+        btnSalvar.addActionListener(e -> {
+            // Se não houve geração recente, tenta gerar a partir do texto atual
+            if (ultimoStaccato == null || ultimoStaccato.isBlank()) {
+                String texto = areaTexto.getText();
+                if (texto == null || texto.isBlank()) {
+                    JOptionPane.showMessageDialog(this,
+                            "Digite ou carregue um texto antes de salvar o MIDI.",
+                            "Atenção",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                ultimoStaccato = gerador.gerar(compositor.compor(texto));
+            }
+
+            // delega a lógica de diálogo e escrita para SaidaMusicalJFugue
+            saida.salvarMidiComDialog(this, ultimoStaccato);
+        });
+
         setVisible(true);
     }
 
@@ -66,6 +91,8 @@ public class JanelaPrincipal extends JFrame {
         }
 
         String staccato = gerador.gerar(compositor.compor(texto));
+        // armazena para possível salvamento posterior
+        this.ultimoStaccato = staccato;
         new Thread(() -> saida.tocar(staccato)).start();
     }
 }
