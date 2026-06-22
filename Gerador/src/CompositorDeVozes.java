@@ -27,7 +27,7 @@ public class CompositorDeVozes {
             }
 
             int atraso = extrairAtraso(linha);
-            String conteudo = removerAtraso(linha);
+            String conteudo = normalizarNotas(removerAtraso(linha));
 
             int idx = i % OITAVA_BASE.length;           //ciclico pra mais de 4 linhas
             EstadoMusical estado = new EstadoMusical(
@@ -63,4 +63,11 @@ public class CompositorDeVozes {
         }
         return s;
     }
+
+    //metodo pra tratar notas com mais de dois caracteres
+    private String normalizarNotas(String linha){
+        linha = linha.replace("Mb", "~");
+        return linha;
+    }
+
 }

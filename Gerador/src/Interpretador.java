@@ -9,12 +9,12 @@ import javax.swing.JOptionPane;
 public class Interpretador {
     private final DicionarioDeRegras dicionario;
 
-    public Interpretador(DicionarioDeRegras dicionario){
+    public Interpretador(DicionarioDeRegras dicionario) {
         this.dicionario = dicionario;
 
     }
 
-    public List<EventoMusical> interpretar(String linha, EstadoMusical estado){
+    public List<EventoMusical> interpretar(String linha, EstadoMusical estado) {
         List<EventoMusical> eventos = new ArrayList<>();
         if (linha != null && linha.strip().equals("PIMENTA")) {
             pimenta();
@@ -24,16 +24,16 @@ public class Interpretador {
         for (char caractere : linha.toCharArray()){                 //pra cada caractere, pergunta qual a ação,
             AcaoMusical acao = dicionario.obterAcao(caractere);     // executa a ação, e e verifica se cria um evento
             EventoMusical resultado = acao.executar(estado);
-            if (resultado != null){
+            if (resultado != null) {
                 eventos.add(resultado);
-            }
-            if (caractere >= 'A' && caractere <= 'H') {
-                estado.registrarUltimaNota(resultado.obterNota());
-            } else {
-                estado.limparUltimaNota();
+                if (resultado.ehPausa()) {
+                    estado.limparUltimaNota();
+                } else {
+                    estado.registrarUltimaNota(resultado.obterNota());
+                }
             }
         }
-        return eventos;
+    return eventos;
     }
 
     private void pimenta() {

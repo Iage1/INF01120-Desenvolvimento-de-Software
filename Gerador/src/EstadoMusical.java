@@ -3,50 +3,35 @@ public class EstadoMusical {
     //constantes
     private static final int BPM_INICIAL = 120;
     private static final int BPM_MINIMO = 1;
-    private static final int OITAVA_MAXIMA = 9;
-    private static final int OITAVA_MINIMA = 0;
-    private static final int VOLUME_MAXIMO = 127;
     private static final int TOTAL_INSTRUMENTOS = 128;
 
     //atributos globais
     private static int bpmGlobal = BPM_INICIAL;
 
     //atributos locais
-    private final int oitavaInicial;
-    private int oitavaAtual;
-    private int volumeAtual;
+    private Oitava oitava;
+    private Volume volume;
     private int instrumentoAtual;
     private String ultimaNota = null;
 
     //construtor
     public EstadoMusical(int oitavaInicial, int volumeInicial, int instrumentoInicial) {
-        this.oitavaInicial = oitavaInicial;
-        oitavaAtual = oitavaInicial;
-        volumeAtual = volumeInicial;
+        this.oitava = new Oitava(oitavaInicial);
+        this.volume = new Volume(volumeInicial);
         instrumentoAtual = instrumentoInicial;
     }
 
     //métodos
     public void aumentarOitava(){
-        if (oitavaAtual < OITAVA_MAXIMA){
-            oitavaAtual++;
-        }
-        else {
-            oitavaAtual = oitavaInicial;
-        }
+        oitava = oitava.aumentar();
     }
 
     public void diminuirOitava(){
-        if (oitavaAtual > OITAVA_MINIMA){
-            oitavaAtual--;
-        }
+        oitava = oitava.diminuir();
     }
 
     public void dobrarVolume(){
-        volumeAtual *= 2;
-        if (volumeAtual > VOLUME_MAXIMO){
-            volumeAtual = VOLUME_MAXIMO;
-        }
+        volume = volume.dobrar();
     }
 
     public void alterarBPM(int valor) {
@@ -79,11 +64,11 @@ public class EstadoMusical {
 
     //getters
     public int obterOitavaAtual(){
-        return oitavaAtual;
+        return oitava.valor();
     }
 
     public int obterVolumeAtual(){
-        return volumeAtual;
+        return volume.valor();
     }
 
     public int obterInstrumentoAtual(){

@@ -5,9 +5,12 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.Sequence;
 import org.jfugue.pattern.Pattern;
 import org.jfugue.midi.MidiFileManager;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.Component;
 
 // Camada de saída: a ÚNICA classe que conhece o JFugue.
-public class SaidaMusicalJFugue {
+public class SaidaMusicalJFugue implements SaidaMusical {
 
     private Sequencer sequencer;
     private File tempMidi;
@@ -15,6 +18,7 @@ public class SaidaMusicalJFugue {
     private volatile boolean playing = false;
     private long pausePosition = 0;
 
+    @Override
     public synchronized void tocar(String staccato) {
         stopAndClose();
         try {
@@ -28,7 +32,7 @@ public class SaidaMusicalJFugue {
             sequencer.open();
             sequencer.setSequence(seq);
             sequencer.addMetaEventListener(meta -> {
-                if (meta.getType() == 47) { // end of track
+                if (meta.getType() == 47) {
                     stopAndClose();
                 }
             });
@@ -40,6 +44,7 @@ public class SaidaMusicalJFugue {
         }
     }
 
+    @Override
     public synchronized void pausar() {
         try {
             if (sequencer != null && sequencer.isOpen() && sequencer.isRunning()) {
@@ -53,6 +58,7 @@ public class SaidaMusicalJFugue {
         }
     }
 
+    @Override
     public synchronized void retomar() {
         try {
             if (sequencer != null && sequencer.isOpen() && paused) {
@@ -66,10 +72,12 @@ public class SaidaMusicalJFugue {
         }
     }
 
+    @Override
     public synchronized boolean estaTocando() {
         return sequencer != null && sequencer.isOpen() && sequencer.isRunning();
     }
 
+    @Override
     public synchronized boolean estaPausado() {
         return paused;
     }
@@ -97,7 +105,53 @@ public class SaidaMusicalJFugue {
         }
     }
 
+    @Override
     public void salvarMidi(String staccato, File arquivo) throws IOException {
         MidiFileManager.savePatternToMidi(new Pattern(staccato), arquivo);
     }
+
+    /**
+     * Abre um diálogo para salvar o Pattern (staccato) como arquivo MIDI.
+     * Executa a escrita em background e exibe caixas de diálogo na EDT.
+     */
+    public void salvarMidiComDialog(Component parent, String staccato) {
+        if (staccato == null || staccato.isBlank()) {
+            SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(parent,
+                    "Nenhuma música disponível para salvar. Gere a música primeiro.",
+                    "Atenção",
+                    JOptionPane.WARNING_MESSAGE));
+            return;
+        }
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Salvar arquivo MIDI");
+        chooser.setFileFilter(new FileNameExtensionFilter("MIDI Files (*.mid)", "mid"));
+        int userSelection = chooser.showSaveDialog(parent);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = chooser.getSelectedFile();
+            if (!fileToSave.getName().toLowerCase().endsWith(".mid")) {
+                fileToSave = new File(fileToSave.getParentFile(), fileToSave.getName() + ".mid");
+            }
+            final File finalFile = fileToSave;
+
+            new Thread(() -> {
+                try {
+                    salvarMidi(staccato, finalFile);
+                    SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(parent,
+                            "Arquivo MIDI salvo em:\n" + finalFile.getAbsolutePath(),
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(parent,
+                            "Erro ao salvar o arquivo MIDI:\n" + ex.getMessage(),
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE));
+                }
+            }).start();
+        }
+    }
 }
+
+
+

@@ -1,7 +1,6 @@
 import java.util.List;
 
-// Converte as vozes numa string Staccato do JFugue.
-// Classe PURA (sem JFugue) -> fácil de testar.
+//converte as vozes numa string Staccato do JFugue.
 public class Gerador {
 
     public String gerar(List<Voz> vozes) {
@@ -11,7 +10,7 @@ public class Gerador {
         for (Voz voz : vozes) {
             sb.append('V').append(voz.obterNumero()).append(' ');
 
-            // atraso de entrada: n pausas de semínima
+            //atraso e entrada
             for (int i = 0; i < voz.obterAtraso(); i++) sb.append("Rq ");
 
             int instrumentoEmitido = -1;
